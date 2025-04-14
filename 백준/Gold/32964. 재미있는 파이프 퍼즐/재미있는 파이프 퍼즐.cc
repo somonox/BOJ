@@ -41,11 +41,11 @@ void graph(int x, int y, bool dir) {
         else
             graph(x + 1, y, false);
     }
+    ch[x][y] = 0;
 }
 
 
 int main() {
-
     cin >> num;
 
     for (i = 0; i < 2; i++) {
