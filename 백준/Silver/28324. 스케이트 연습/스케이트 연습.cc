@@ -3,9 +3,9 @@
 
 using namespace std;
 
-vector<int> v;
-int num;
-int i;
+vector<long long> v;
+long long num;
+long long i;
 
 int main() {
     ios::sync_with_stdio(false);
@@ -23,12 +23,12 @@ int main() {
     v.push_back(0);
 
 
-    for (i = num; i >= 0; i--) {
+    for (i = num; i > 0; --i) {
         if (v[i - 1] - v[i] > 1) {
             v[i - 1] = (v[i] + 1) % v[i - 1];
         }
     }
-    int sum = 0;
+    long long sum = 0;
     for (i = 0; i < v.size(); i++) {
         sum += v[i];
     }
