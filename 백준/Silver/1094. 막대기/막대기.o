@@ -1,0 +1,31 @@
+section .bss
+    a: resd 1
+
+section .data
+    input: db "%d", 0
+	output: db "%d", 0
+
+section .text
+    global main
+    extern printf
+    extern scanf
+
+main:
+    push rbp
+    mov rbp, rsp
+
+    lea rsi, [rel a]
+    lea rdi, [rel input]
+    call scanf
+
+    mov eax, [rel a]
+    popcnt eax, eax
+
+    mov esi, eax
+    lea rdi, [rel output]
+    xor eax, eax
+    call printf
+
+    mov eax, 0
+    pop rbp
+    ret
