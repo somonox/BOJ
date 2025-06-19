@@ -1,0 +1,60 @@
+section .bss
+    str: resb 51      ; String do not over 50 byte in this problem
+
+section .data
+    input: db "%s", 0
+    output: db "%s", 0
+    additional: db "??!", 0
+
+section .text
+    global main
+    extern printf
+    extern scanf
+
+scat:
+    push rdx
+
+    mov rdx, rdi
+
+; Inc rdi until find null charater
+.find_end:
+    mov al, [rdi]
+    cmp al, 0
+    je .copy_start
+    inc rdi
+    jmp .find_end
+
+.copy_start:
+    mov al, [rsi] ; al = rsi
+    mov [rdi], al ; rdi = al
+    inc rdi
+    inc rsi
+    test al, al
+    jne .copy_start
+
+    mov rax, rdx
+    pop rbx
+    ret
+
+
+main:
+    push rbp
+    mov rbp, rsp
+
+    lea rsi, [rel str]
+    lea rdi, [rel input]
+    call scanf
+
+    lea rdi, [rel str]
+    lea rsi, [rel additional]
+    call scat
+
+    lea rsi, [rel str]
+    lea rdi, [rel output]
+
+    xor eax, eax
+    call printf
+
+    mov eax, 0
+    pop rbp
+    ret
