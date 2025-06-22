@@ -1,0 +1,47 @@
+section .bss
+    str: resb 101      ; Number of character should not over 100 in this problem
+
+section .data
+    input: db "%s", 0
+    output: db "%d", 0
+
+section .text
+    global main
+    extern printf
+    extern scanf
+
+getlen:
+    ; Initialize length
+    xor rcx, rcx
+
+.len_loop:
+    mov al, [rsi + rcx]
+    test al, al
+    je .done
+    inc rcx
+    jmp .len_loop
+
+.done:
+    ret    
+
+
+main:
+    push rbp
+    mov rbp, rsp
+
+    lea rsi, [rel str]
+    lea rdi, [rel input]
+    call scanf
+
+    lea rsi, [rel str]
+    call getlen
+
+    mov rsi, rcx
+    lea rdi, [rel output]
+
+    xor eax, eax
+    call printf
+
+    mov eax, 0
+    pop rbp
+    ret
