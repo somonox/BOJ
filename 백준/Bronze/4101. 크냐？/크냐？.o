@@ -1,0 +1,51 @@
+section .data
+    input db "%d %d", 0 
+    no_o db "No", 10, 0
+    yes_o db "Yes", 10, 0
+
+
+section .bss
+    a: resd 1
+    b: resd 1
+
+section .text
+    global main
+    extern scanf, printf 
+
+main:
+    push rbp
+    mov rbp, rsp
+
+.while:
+    lea rdi, [rel input]
+    lea rsi, [rel a]
+    lea rdx, [rel b]
+    xor eax, eax
+    call scanf
+
+    mov eax, [rel a]
+    or eax, [rel b]
+    jz .end
+
+    mov eax, [rel a]
+    cmp eax, [rel b]
+
+    jg .great
+    jle .less
+
+.great:
+    lea rdi, [rel yes_o]
+    xor eax, eax
+    call printf
+    jmp .while
+
+.less:
+    lea rdi, [rel no_o]
+    xor eax, eax
+    call printf
+    jmp .while
+
+.end:
+    mov eax, 0
+    pop rbp
+    ret
