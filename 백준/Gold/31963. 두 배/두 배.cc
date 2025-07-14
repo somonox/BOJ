@@ -1,32 +1,30 @@
-#include<iostream>
-#include<vector>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<int> v;
-int num, cnt;
-int i;
+vector<int> l;
+vector<long long> dp;
+long long cnt = 0;
+int n;
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    
-    cin >> num;
-    v.resize(num);
 
-    for (auto &i : v)
+    cin >> n;
+    l.resize(n);
+    for (auto &i : l)
         cin >> i;
+    dp.resize(n);
 
-    for (i = 1; i < num; i++) {
-        while (v[i] < v[i - 1]) {
-            v[i] *= 2;
-            cnt++;
+    for (int i = 1; i < n; ++i) {
+        double base = ceil(log2((double)l[i - 1] / l[i]));
+        long long r = (long long)base + dp[i - 1];
+        if (r > 0) {
+            dp[i] = r;
+            cnt += r;
         }
     }
 
-    cout << cnt << endl;
-
-
-
+    cout << cnt;
     return 0;
 }
