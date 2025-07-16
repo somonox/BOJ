@@ -10,7 +10,8 @@ int i, j;
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    
+    cout.tie(NULL);
+
     cin >> t;
 
     for (i = 0; i < t; i++) {
