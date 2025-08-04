@@ -1,70 +1,61 @@
 #include<iostream>
 #include<queue>
 #include<unordered_map>
-#include<stack>
-#include<climits>
+#include<vector>
+#include<algorithm>
 
 using namespace std;
 using ull = unsigned long long;
-
-priority_queue<ull> bests;
-unordered_map<ull,ull> visited;
-ull l, n, k;
-ull i, j;
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
-    cin >> l >> n >> k;
-    queue<pair<ull, ull>> q;
 
-    for (i = 0; i < n; i++) {
+    ull l, n, k;
+    cin >> l >> n >> k;
+
+    unordered_map<ull, ull> visited;
+    queue<ull> q;
+    vector<ull> results;
+
+    for (ull i = 0; i < n; i++) {
         ull tmp;
         cin >> tmp;
-        q.push({tmp, 0});
-        visited[tmp] = 0;
-    }
-
-    for (i = 0; i < k; i++) {
-        bests.push(ULLONG_MAX);
-    }
-
-    while (!q.empty()) {
-        pair<ull, ull> front = q.front();
-        if (front.second > k) {
-            break;
+        if (!visited.count(tmp)) {
+            q.push(tmp);
+            visited[tmp] = 0;
+            results.push_back(0);
         }
+    }
+
+    while (!q.empty() && results.size() < k) {
+        ull curr = q.front();
         q.pop();
-        
-        if (visited.contains(front.first) && visited[front.first] < bests.top()) {
-            bests.push(visited[front.first]);
-            if (bests.size() > k)
-                bests.pop();
+
+        if (curr > 0) {
+            ull next = curr - 1;
+            if (!visited.count(next)) {
+                visited[next] = visited[curr] + 1;
+                q.push(next);
+                results.push_back(visited[next]);
+            }
         }
-        
-        if (!visited.contains(front.first + 1) && front.first < l) {
-            q.push({front.first + 1, front.second + 1});
-            visited[front.first + 1] = visited[front.first] + 1;
-        }
-      
-        if (!visited.contains(front.first - 1) && front.first > 0) {
-            q.push({front.first - 1, front.second + 1});
-            visited[front.first - 1] = visited[front.first] + 1;
+
+        if (curr < l) {
+            ull next = curr + 1;
+            if (!visited.count(next)) {
+                visited[next] = visited[curr] + 1;
+                q.push(next);
+                results.push_back(visited[next]);
+            }
         }
     }
 
-    stack<ull> rev;
-    while (!bests.empty()) {
-        if (bests.top() != ULLONG_MAX) {
-            rev.push(bests.top());
-        }
-        bests.pop();
-    }
+    sort(results.begin(), results.end());
 
-    while (!rev.empty()) {
-        cout << rev.top() << "\n";
-        rev.pop();
+    for (ull i = 0; i < k && i < results.size(); i++) {
+        cout << results[i] << "\n";
     }
 
     return 0;
