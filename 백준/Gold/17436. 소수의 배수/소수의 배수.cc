@@ -14,7 +14,6 @@ ll i, j;
 int main() {
     cin >> pc >> num;
     v.resize(pc);
-    sort(v.begin(), v.end());
 
     for (auto &i : v) {
         cin >> i;
