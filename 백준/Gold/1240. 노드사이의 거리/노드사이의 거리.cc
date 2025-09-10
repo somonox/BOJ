@@ -25,6 +25,9 @@ int dfs(int nn, int mok, int cnt) {
 }
 
 int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
     cin >> n >> m;
     tree.resize(n + 1);
     visited.resize(n + 1);
