@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0)
+#define DLOOP(w, n) for (w = 0; w < n; w++)
+#define RLOOP(w, n, k) for (w = n; w <= k; w++)
+#define LOOP while (true)
+#define LOOPN(n) while(n--)
+#define FILLV(v, k) v.resize(k); for (auto &i : v)
+#define RBL(v) for (auto &i : v)
+#define FINP freopen("input.txt", "r", stdin)
+#define INPS(n) cin >> n
+#define OUTLNWV(v) cout << v << endl
+#define OUTLN cout << endl
+#define OUTV(v) cout << v << " "
+#define IFBRK(exprs) if (exprs) break
+
+#define TL __int128_t
+#define ULL unsigned long long
+#define LL long long
+using namespace std;
+
+string str;
+string vowel = "aeiouAEIOU";
+
+int main() {
+  LOOP {
+    int a = 0;
+    getline(cin, str);
+    IFBRK(str == "#");
+    RBL(str) {
+      if (vowel.find(i) != string::npos)
+        a++;
+    }
+    OUTLNWV(a);
+  }
+  return 0;
+}
